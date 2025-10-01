@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "415152001103",
+    "project_id": "flutter-feature-supergut-b7b0e",
+    "storage_bucket": "flutter-feature-supergut-b7b0e.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:415152001103:android:dd63bb38eb1596fc14da3a",
+        "android_client_info": {
+          "package_name": "com.example.delivery"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyADK472eDQBSR-qYQXPVgwoRTHm3c4zLRE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
