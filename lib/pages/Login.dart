@@ -4,7 +4,6 @@ import 'package:delivery/pages/register_user.dart';
 import 'package:delivery/pages/select_user.rider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:delivery/components/purplebottom.dart';
 import 'package:delivery/components/bottompurple.dart';
 import 'package:delivery/pages/home_user.dart';
 import 'package:delivery/pages/้home_rider.dart';

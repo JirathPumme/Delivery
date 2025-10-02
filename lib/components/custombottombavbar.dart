@@ -13,7 +13,7 @@ class CustomBottomNavBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
-      backgroundColor: const Color(0xFF3F51B5), // สีม่วง Indigo ตามดีไซน์
+      backgroundColor: const Color(0xFF3F51B5), // สีม่วง Indigo
       currentIndex: currentIndex,
       onTap: onTap,
       selectedItemColor: Colors.white,
@@ -38,3 +38,20 @@ class CustomBottomNavBar extends StatelessWidget {
     );
   }
 }
+
+/*@override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text('Rider Home')),
+      body: const Center(
+        // ... เนื้อหาของหน้า Home Rider ...
+        child: Text('Welcome Rider!'),
+      ),
+
+      // เรียกใช้ Component ที่นี่
+      bottomNavigationBar: CustomBottomNavBar(
+        currentIndex: _selectedIndex,
+        onTap: _onItemTapped,
+      ),
+    );
+  }*/

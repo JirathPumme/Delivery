@@ -1,18 +1,18 @@
-import 'package:flutter/material.dart';
-import 'package:delivery/components/custombottombavbar.dart';
+import 'package:delivery/pages/้home_rider.dart';
 import 'package:delivery/pages/list_rider_page.dart';
-import 'package:delivery/pages/setting_page.dart'; // 1. import component ของเรา
+import 'package:delivery/components/custombottombavbar.dart';
+import 'package:flutter/material.dart';
 
-class HomeRider extends StatefulWidget {
-  const HomeRider({super.key});
+class SettingPage extends StatefulWidget {
+  const SettingPage({super.key});
 
   @override
-  State<HomeRider> createState() => _HomeRiderState();
+  State<SettingPage> createState() => _SettingPageState();
 }
 
-class _HomeRiderState extends State<HomeRider> {
-  
-  int _selectedIndex = 0;
+class _SettingPageState extends State<SettingPage> {
+
+int _selectedIndex = 0;
 
   void _onItemTapped(int index) {
     // อัปเดต State เพื่อให้ไอคอนที่ถูกเลือกเปลี่ยนสี
@@ -46,7 +46,7 @@ class _HomeRiderState extends State<HomeRider> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title:  Text('HomePageRider')),
+      appBar: AppBar(title:  Text('Setting')),
       body: const Center(
         child: Text(''),
       ),

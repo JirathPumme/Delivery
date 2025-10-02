@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
   ),
   title: 'Delivery',
   //home: const MyApp(),
-  initialRoute: '/login',
+  initialRoute: '/homerider',
   routes: {
     '/splash': (context) => const Splash_Page(),
     '/login': (context) => const LoginPage(),

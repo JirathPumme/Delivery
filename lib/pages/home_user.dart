@@ -3,7 +3,7 @@ import 'package:delivery/pages/Login.dart';
 import 'package:delivery/pages/Splash_page.dart';
 import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:delivery/config/Apptheme.dart';
-import 'package:delivery/components/purplebottom.dart';
+import 'package:delivery/components/custombottombavbar.dart';
 
 class HomeUser extends StatefulWidget {
   const HomeUser({super.key});
@@ -31,10 +31,14 @@ class _HomeUserState extends State<HomeUser> {
       body: const Center(
         child: Text(''),
       ),
-
-      bottomNavigationBar: CustomBottomNavBar(
+        bottomNavigationBar: CustomBottomNavBar(
         currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        onTap: (index) {
+          setState(() {
+            _selectedIndex = index;
+            // คุณสามารถใส่ Logic การเปลี่ยนหน้าของคุณได้ที่นี่
+          });
+        },
       ),
     );
   }
