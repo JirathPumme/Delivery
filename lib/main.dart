@@ -3,7 +3,9 @@ import 'package:delivery/pages/%E0%B9%89home_rider.dart';
 import 'package:delivery/pages/home_user.dart';
 import 'package:delivery/pages/register_rider.dart';
 import 'package:delivery/pages/register_user.dart';
+import 'package:delivery/pages/rider_main_screen.dart';
 import 'package:delivery/pages/select_user.rider.dart';
+import 'package:delivery/pages/user_main_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:delivery/pages/Login.dart';
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
   ),
   title: 'Delivery',
   //home: const MyApp(),
-  initialRoute: '/homerider',
+  initialRoute: '/login',
   routes: {
     '/splash': (context) => const Splash_Page(),
     '/login': (context) => const LoginPage(),
@@ -39,6 +41,8 @@ class MyApp extends StatelessWidget {
     '/register_user': (context) => const RegisterUser(),
     '/selectuser_rider': (context) => const SelectUserrider(),
     '/register_rider': (context) => const RegisterRider(),
+    '/user_main_screen': (context) => const UserMainScreen(),
+    '/rider_main_screen': (context) => const RiderMainScreen(),
     },
   );
  } 

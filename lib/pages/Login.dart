@@ -1,7 +1,9 @@
 //import 'dart:developer';
 import 'package:delivery/config/Apptheme.dart';
 import 'package:delivery/pages/register_user.dart';
+import 'package:delivery/pages/rider_main_screen.dart';
 import 'package:delivery/pages/select_user.rider.dart';
+import 'package:delivery/pages/user_main_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:delivery/components/bottompurple.dart';
@@ -21,10 +23,10 @@ class LoginPageState extends State<LoginPage> {
   final TextEditingController _passwordController = TextEditingController();
   String? _errorText;
 
-  final String correctUserPhone = '0855948782';
+  final String correctUserPhone = '9999';
   final String correctUserPassword = '9999';
 
-  final String correctRiderPhone = '0925190303';
+  final String correctRiderPhone = '8888';
   final String correctRiderPassword = '8888';
 
   void _login() {
@@ -37,7 +39,7 @@ class LoginPageState extends State<LoginPage> {
       });
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomeUser()),
+        MaterialPageRoute(builder: (context) => const UserMainScreen()),
       );
     }
 
@@ -47,7 +49,7 @@ class LoginPageState extends State<LoginPage> {
       });
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const HomeRider()),
+        MaterialPageRoute(builder: (context) => const RiderMainScreen()),
       );
     }
     
