@@ -1,6 +1,8 @@
 import 'package:delivery/firebase_options.dart';
 import 'package:delivery/pages/%E0%B9%89home_rider.dart';
 import 'package:delivery/pages/home_user.dart';
+import 'package:delivery/pages/profile_rider.dart';
+import 'package:delivery/pages/profile_user.dart';
 import 'package:delivery/pages/register_rider.dart';
 import 'package:delivery/pages/register_user.dart';
 import 'package:delivery/pages/rider_main_screen.dart';
@@ -32,17 +34,19 @@ class MyApp extends StatelessWidget {
   ),
   title: 'Delivery',
   //home: const MyApp(),
-  initialRoute: '/login',
+  initialRoute: '/user_main_screen',
   routes: {
     '/splash': (context) => const Splash_Page(),
     '/login': (context) => const LoginPage(),
-    '/homeuser': (context) => const HomeUser(),
-    '/homerider': (context) => const HomeRider(),
+    //'/homeuser': (context) => const HomeUser(),
+    //'/homerider': (context) => const HomeRider(),
     '/register_user': (context) => const RegisterUser(),
     '/selectuser_rider': (context) => const SelectUserrider(),
     '/register_rider': (context) => const RegisterRider(),
     '/user_main_screen': (context) => const UserMainScreen(),
     '/rider_main_screen': (context) => const RiderMainScreen(),
+    '/profile_rider': (context) => const ProfileRider(),
+    '/profile_user': (context) => const ProfileUser(),
     },
   );
  } 
