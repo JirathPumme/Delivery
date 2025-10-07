@@ -36,18 +36,16 @@ class _SelectUserriderState extends State<SelectUserrider> {
 
               const SizedBox(height: 0,),
 
-              // SizedBox(height: 0) ที่มีอยู่แล้ว
-
               Padding(
                 padding: const EdgeInsets.fromLTRB(40,0,40,0),
                 child: SizedBox(
-                  width: double.infinity, // ทำให้ปุ่มกว้างเต็มที่ตาม Padding
+                  width: double.infinity,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.orange, // สีพื้นหลังของปุ่ม
-                      padding: const EdgeInsets.symmetric(vertical: 16.0), // ความสูงของปุ่ม
+                      backgroundColor: Colors.orange,
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18), // ความโค้งของขอบ
+                        borderRadius: BorderRadius.circular(18),
                       ),
                     ),
                     onPressed:()
@@ -66,18 +64,18 @@ class _SelectUserriderState extends State<SelectUserrider> {
                 ),
               ),
 
-              const SizedBox(height: 20), // ระยะห่างระหว่างสองปุ่ม
+              const SizedBox(height: 20),
 
               Padding(
                 padding: const EdgeInsets.fromLTRB(40,10,40,0),
                 child: SizedBox(
-                  width: double.infinity, // ทำให้ปุ่มกว้างเต็มที่ตาม Padding
+                  width: double.infinity,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.cyan, // สีพื้นหลังของปุ่ม
-                      padding: const EdgeInsets.symmetric(vertical: 16.0), // ความสูงของปุ่ม
+                      backgroundColor: Colors.cyan,
+                      padding: const EdgeInsets.symmetric(vertical: 16.0),
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(18), // ความโค้งของขอบ
+                        borderRadius: BorderRadius.circular(18),
                       ),
                     ),
                     onPressed: () {
@@ -94,10 +92,10 @@ class _SelectUserriderState extends State<SelectUserrider> {
                   ),
                 ),
               ),
-              const SizedBox(height: 30), // เพิ่มระยะห่างจากปุ่มด้านบน
+              const SizedBox(height: 30),
 
               Row(
-                mainAxisAlignment: MainAxisAlignment.center, // จัดให้อยู่ตรงกลาง
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Text(
                     'หากมีบัญชีอยู่แล้ว',

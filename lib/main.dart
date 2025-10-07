@@ -1,5 +1,5 @@
 import 'package:delivery/firebase_options.dart';
-import 'package:delivery/pages/%E0%B9%89home_rider.dart';
+import 'package:delivery/pages/home_rider.dart';
 import 'package:delivery/pages/home_user.dart';
 import 'package:delivery/pages/profile_rider.dart';
 import 'package:delivery/pages/profile_user.dart';

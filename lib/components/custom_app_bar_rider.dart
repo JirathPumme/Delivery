@@ -9,17 +9,16 @@ class CustomAppBarRider extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     return AppBar(
       backgroundColor: Colors.indigo[600],
-      elevation: 0, // เอาเงาออก
+      elevation: 0,
       automaticallyImplyLeading: false,
 
       title: Row(
         children: [
           Image.asset(
             'images/Logosuper_guts.png',
-            height: 50, // ปรับขนาดตามความเหมาะสม
+            height: 50,
           ),
-          const SizedBox(width: 20), // ระยะห่าง
-          //ชื่อ Rider (ตอนนี้ใส่เป็น Text เฉยๆ ก่อน)
+          const SizedBox(width: 20), 
           const Text(
             'Rider (ชื่อ)',
             style: TextStyle(color: Colors.white,

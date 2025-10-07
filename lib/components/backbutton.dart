@@ -30,6 +30,5 @@ class Backbutton extends StatelessWidget {
       body: const Center(
         child: Text(''),
       ),
-      bottomNavigationBar: const DecorativeBottomBar(),
     );
   }*/

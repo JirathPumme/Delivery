@@ -1,6 +1,7 @@
+import 'package:delivery/pages/home_rider.dart';
 import 'package:flutter/material.dart';
 import 'package:delivery/components/custombottombavbar.dart';
-import 'package:delivery/pages/้home_rider.dart';
+import 'package:delivery/pages/home_rider.dart';
 import 'package:delivery/pages/list_rider_page.dart';
 import 'package:delivery/pages/setting_page.dart';
 
@@ -14,14 +15,12 @@ class RiderMainScreen extends StatefulWidget {
 class _RiderMainScreenState extends State<RiderMainScreen> {
   int _selectedIndex = 0;
 
-  // กำหนด 'หน่วยปฏิบัติการ' ของฝั่ง Rider
   static const List<Widget> _pages = <Widget>[
     HomeRider(),   // Index 0
     ListRiderPage(),   // Index 1
     SettingPage(),     // Index 2
   ];
 
-  // ฟังก์ชันรับรายงานเมื่อมีการกดปุ่ม
   void _onItemTapped(int index) {
     setState(() {
       _selectedIndex = index;

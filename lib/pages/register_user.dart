@@ -15,10 +15,9 @@ class _RegisterUserState extends State<RegisterUser> {
   
   final TextEditingController _gpsController = TextEditingController();
 
-  //ฟังก์ชันสำหรับดึงตำแหน่งปัจจุบัน
   Future<void> _getCurrentLocation() async {
     try {
-      // ดึงตำแหน่งปัจจุบัน
+
       Position position = await Geolocator.getCurrentPosition(
         desiredAccuracy: LocationAccuracy.high,
       );
@@ -151,7 +150,6 @@ class _RegisterUserState extends State<RegisterUser> {
     );
   }
 
-  // Widget สำหรับสร้างช่องกรอกข้อมูลและ Label (เหมือนเดิม)
   Widget _buildTextField(String label, {bool isObscure = false}) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -180,7 +178,6 @@ class _RegisterUserState extends State<RegisterUser> {
     );
   }
 
-  // == Widget ใหม่สำหรับช่อง GPS โดยเฉพาะ ==
   Widget _buildGpsTextField() {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -194,8 +191,8 @@ class _RegisterUserState extends State<RegisterUser> {
         ),
         const SizedBox(height: 8),
         TextFormField(
-          controller: _gpsController, // ผูก Controller เข้ากับ TextFormField
-          readOnly: true, // ทำให้ผู้ใช้พิมพ์เองไม่ได้ แต่ยังกดเลือกได้
+          controller: _gpsController,
+          readOnly: true, 
           decoration: InputDecoration(
             filled: true,
             fillColor: Colors.white,
@@ -207,7 +204,7 @@ class _RegisterUserState extends State<RegisterUser> {
             // เพิ่มไอคอนท้ายช่อง
             suffixIcon: IconButton(
               icon: const Icon(Icons.my_location, color: Color(0xFF5B4FBF)),
-              onPressed: _getCurrentLocation, // เมื่อกดไอคอนให้เรียกฟังก์ชัน
+              onPressed: _getCurrentLocation, 
             ),
           ),
         ),

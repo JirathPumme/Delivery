@@ -1,5 +1,6 @@
+import 'package:delivery/pages/ready_delivery.dart';
 import 'package:flutter/material.dart';
-import 'package:delivery/components/custom_app_bar.dart';
+
 
 class HomeUser extends StatelessWidget {
   const HomeUser({super.key});
@@ -8,15 +9,21 @@ class HomeUser extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.yellowAccent[700],
-      appBar: const CustomAppBar(
-      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             const SizedBox(height: 45),
+
             ElevatedButton(
-              onPressed: () {},
+              onPressed: ()
+              {
+                Navigator.push
+                    (
+                      context,
+                      MaterialPageRoute(builder: (context) => const ReadyDelivery()),
+                    );
+              },
 
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.grey[200],
@@ -43,17 +50,13 @@ class HomeUser extends StatelessWidget {
               onPressed: () {},
 
               style: ElevatedButton.styleFrom(
-                // สีพื้นหลังปุ่ม
                 backgroundColor: Colors.grey[200],
-                // สีตัวอักษรและเงาตอนกด
                 foregroundColor: Colors.black,
-                // ขนาด (กว้าง, สูง)
                 minimumSize: const Size(280, 90),
-                // ทำให้ขอบโค้งมน
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(30),
                 ),
-                elevation: 5, // เพิ่มเงาเล็กน้อย
+                elevation: 5,
               ),
 
               child: const Text(
