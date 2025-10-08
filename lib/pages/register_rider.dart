@@ -39,7 +39,7 @@ class _RegisterRiderState extends State<RegisterRider> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.indigo[600], // สีม่วงตามดีไซน์
+      backgroundColor: Colors.indigo[600],
       appBar: CustomAppBar(title: ''),
       body: SafeArea(
         child: SingleChildScrollView(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+//ช่อง เพิ่ม - ลด จํานวนสินค้า
 
 class QuantitySelector extends StatelessWidget {
   final int quantity;
