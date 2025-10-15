@@ -34,11 +34,12 @@ class MyApp extends StatelessWidget {
     textTheme: GoogleFonts.notoSansThaiTextTheme()
   ),
   title: 'Delivery',
-  //home: const MyApp(),
-  initialRoute: '/testgps',
+  // home: const MyApp(),
+  initialRoute: '/user_main_screen',
   routes: {
     '/splash': (context) => const Splash_Page(),
     '/login': (context) => const LoginPage(),
+    //   initialRoute: '/testgps',
     //'/homeuser': (context) => const HomeUser(),
     //'/homerider': (context) => const HomeRider(),
     '/register_user': (context) => const RegisterUser(),
