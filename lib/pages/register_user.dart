@@ -1,8 +1,8 @@
 import 'package:delivery/components/Navigator_back.dart';
 import 'package:delivery/pages/Login.dart';
 import 'package:flutter/material.dart';
-import 'package:geolocator/geolocator.dart';
 import 'package:delivery/components/bottompurple.dart';
+import 'package:geolocator/geolocator.dart';
 
 class RegisterUser extends StatefulWidget {
   const RegisterUser({super.key});
