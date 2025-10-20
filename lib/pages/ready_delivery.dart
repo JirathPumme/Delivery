@@ -2,6 +2,7 @@
 // ยังไม่เรียบร้อย มีบัค Map อยู๋
 import 'package:delivery/pages/confirm_order.dart';
 import 'package:delivery/pages/profile_user.dart';
+import 'package:delivery/pages/wait_rider_recieve.dart';
 import 'package:flutter/material.dart';
 import 'package:delivery/components/custom_app_bar.dart';
 //import 'package:delivery/components/backbutton.dart';
@@ -76,8 +77,13 @@ void _showConfirmationDialog() {
           TextButton(
             child: const Text('ตกลง', style: TextStyle(color: Colors.green)),
             onPressed: () {
-              // ใส่ Firebase 
               print("Confirmed! Firing data to Firebase...");
+              Navigator.pushReplacement
+                    (
+                      context,
+                      MaterialPageRoute(builder: (context) => const WaitRiderRecieve()),
+                    );
+              // ใส่ Firebase 
               //Navigator.of(dialogContext).pop(); // ปิด Pop-up
               //Navigator.of(context).pop();      // กลับไปหน้า Home
             },
