@@ -1,4 +1,5 @@
 import 'package:delivery/firebase_options.dart';
+import 'package:delivery/pages/google_map_screen.dart';
 import 'package:delivery/pages/home_rider.dart';
 import 'package:delivery/pages/home_user.dart';
 import 'package:delivery/pages/profile_rider.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
   ),
   title: 'Delivery',
   // home: const MyApp(),
-  initialRoute: '/user_main_screen',
+  initialRoute: '/google_map',
   routes: {
     '/splash': (context) => const Splash_Page(),
     '/login': (context) => const LoginPage(),
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
     '/profile_rider': (context) => const ProfileRider(),
     '/profile_user': (context) => const ProfileUser(),
     '/testgps': (context) => const Testgps(),
+    '/google_map': (context) => const GoogleMapScreen(),
     },
   );
  } 
