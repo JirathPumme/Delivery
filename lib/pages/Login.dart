@@ -9,6 +9,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:delivery/components/bottompurple.dart';
 import 'package:delivery/pages/home_user.dart';
 import 'package:delivery/pages/home_rider.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'dart:developer' as developer;
+import 'package:delivery/model/user_data_list.dart';
 
 class LoginPage extends StatefulWidget {
   const  LoginPage({super.key});
@@ -28,12 +31,59 @@ class LoginPageState extends State<LoginPage> {
 
   final String correctRiderPhone = '8888';
   final String correctRiderPassword = '8888';
+  List<UserDataList> userdata = [];
+
+Future<void> queryDataFromCollection(String collectionName) async {
+  try {
+    CollectionReference collectionRef =
+    FirebaseFirestore.instance.collection(collectionName);
+
+    QuerySnapshot querySnapshot = await collectionRef.get();
+
+    userdata.clear();
+
+    for (var doc in querySnapshot.docs) {
+      Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+
+      // Pass doc.id into fromJson
+      UserDataList user = UserDataList.fromJson(data, docId: doc.id);
+
+      userdata.add(user);
+      developer.log('✅ Added user: ${user.username} (id: ${user.id})');
+    }
+
+    developer.log('Total users fetched: ${userdata.length}');
+  } catch (e) {
+    developer.log('Error querying data: $e');
+  }
+}
 
   void _login() {
+
     String phone = _phoneController.text;
     String password = _passwordController.text;
+    bool userlogin = false;
+    bool riderlogin = false;
+    queryDataFromCollection('Users');
 
-    if (phone == correctUserPhone && password == correctUserPassword) {
+    for (var user in userdata) {
+      if (user.id != null) {
+      developer.log(user.id.toString());     
+      if (user.phoneNumber == phone && user.password == password) {
+        if (user.roleId == 1) {
+          userlogin = true;
+        }else {
+          riderlogin = true;
+        }
+      }
+
+      }
+
+
+    }
+    // return;
+
+    if (userlogin) {
       setState(() {
         _errorText = null;
       });
@@ -43,7 +93,7 @@ class LoginPageState extends State<LoginPage> {
       );
     }
 
-    else if (phone == correctRiderPhone && password == correctRiderPassword) {
+    else if (riderlogin) {
       setState(() {
         _errorText = null;
       });
