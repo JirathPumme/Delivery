@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
   ),
   title: 'Delivery',
   // home: const MyApp(),
-  initialRoute: '/rider_main_screen',
+  initialRoute: '/user_main_screen',
   routes: {
     '/splash': (context) => const Splash_Page(),
     '/login': (context) => const LoginPage(),
