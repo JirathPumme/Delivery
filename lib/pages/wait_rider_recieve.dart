@@ -24,25 +24,8 @@ class _WaitRiderRecieveState extends State<WaitRiderRecieve> {
 
   //แสดงผลข้อความ
   bool _showStatusOverlay = false;
+  String _currentStatusText = '';
 
-  @override
-  void initState() {
-    super.initState();
-    // จำลอง
-    // หน่วงเวลา 1 วินาทีก่อนแสดงผล เพื่อให้รู้สึกเหมือนมีการรอ Rider รับงาน
-    Timer(const Duration(seconds: 1), () {
-      setState(() {
-        _showStatusOverlay = true; // สั่งให้ 'แสดง'
-      });
-
-      // จากนั้นตั้งเวลาอีก 5 วินาทีเพื่อ 'ซ่อน'
-      Timer(const Duration(seconds: 5), () {
-        setState(() {
-          _showStatusOverlay = false;
-        });
-      });
-    });
-  }
 
   final List<Map<String, String>> _mockItems = [
     {
@@ -57,6 +40,54 @@ class _WaitRiderRecieveState extends State<WaitRiderRecieve> {
        "dropoff": "สถานที่ส่ง ZZ",
      },
   ];
+
+
+  @override
+  void initState() {
+    super.initState();
+
+    _runStatusSimulation();
+  }
+
+  void _runStatusSimulation() {
+        //(จำลอง) ไรเดอร์กดรับงาน
+        Timer(const Duration(seconds: 2), () {
+          setState(() {
+            _currentStatusText = 'ไรเดอร์รับงานแล้ว';
+            _showStatusOverlay = true;
+          });
+
+        //ซ่อนข้อความ
+        Timer(const Duration(seconds: 5), () {
+          setState(() {
+            _showStatusOverlay = false;
+          });
+
+        //ไรเดอร์กําลังเดินทางมารับสินค้า
+        Timer(const Duration(milliseconds: 500), () {
+          setState(() {
+            _currentStatusText = 'ไรเดอร์กำลังเดินทางมารับสินค้า';
+            _showStatusOverlay = true; 
+          });
+
+        //ซ่อนข้อความ
+        Timer(const Duration(seconds: 5), () {
+          setState(() {
+            _showStatusOverlay = false;
+          });
+
+        //ไรเดอร์รับสินค้าแล้ว (กําลังเดินทางไปส่งสินค้า)
+        Timer(const Duration(milliseconds: 500), () {
+          setState(() {
+            _currentStatusText = 'ไรเดอร์กําลังเดินทางไปส่งสินค้า';
+            _showStatusOverlay = true; 
+        });
+            });
+          });
+        }); 
+      });
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,48 +149,66 @@ class _WaitRiderRecieveState extends State<WaitRiderRecieve> {
                   ],
                 ),
 
-
-                child: ListView.builder(
-                  controller: scrollController, // ส่ง Controller ให้ ListView!
-                  padding: EdgeInsets.fromLTRB(0,30,0,0),
-                  itemCount: _mockItems.length + 1, 
-                  itemBuilder: (BuildContext context, int index) {
-                    
-
-                    if (index == _mockItems.length) {
-                      return Padding(
-                        padding: const EdgeInsets.all(16.0),
-                        child: TextButton(
-                          style: TextButton.styleFrom(
-                            backgroundColor: Colors.red,
-                            foregroundColor: Colors.white,
-                          ),
-                          onPressed: () {
-                            Navigator.pushReplacement(
-                              context,
-                              MaterialPageRoute(builder: (context) => const ReadyDelivery()),
-                            );
-                          },
-                          child: Text('ยกเลิก',style: TextStyle(
-                            fontWeight:FontWeight.bold
-                          ),
-                         ),
+            
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(top: 15.0, bottom: 8.0),
+                      child: Container(
+                        width: 40,
+                        height: 5,
+                        decoration: BoxDecoration(
+                          color: Colors.black,
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                      );
-                    }
-
-                    // รายการสินค้า 
-                    final item = _mockItems[index];
-                    return Card(
-                      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), 
-                      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)), 
-                      elevation: 4, 
-                      child: ListTile( // เอา ListTile มาใส่เป็น child ของ Card
-                        title: Text(item['product']!, style: const TextStyle(fontWeight: FontWeight.bold)),
-                        subtitle: Text('สถานที่รับ : ${item['pickup']}\nสถานที่ส่ง : ${item['dropoff']}'),
                       ),
-                    );
-                  },
+                    ),
+
+                    Expanded(
+                      child: ListView.builder(
+                        controller: scrollController, // ส่ง Controller ให้ ListView!
+                        padding: EdgeInsets.fromLTRB(0,5,0,0),
+                        itemCount: _mockItems.length + 1, 
+                        itemBuilder: (BuildContext context, int index) {
+                          
+                      
+                          if (index == _mockItems.length) {
+                            return Padding(
+                              padding: const EdgeInsets.all(16.0),
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  backgroundColor: Colors.red,
+                                  foregroundColor: Colors.white,
+                                ),
+                                onPressed: () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => const ReadyDelivery()),
+                                  );
+                                },
+                                child: Text('ยกเลิก',style: TextStyle(
+                                  fontWeight:FontWeight.bold
+                                ),
+                               ),
+                              ),
+                            );
+                          }
+                      
+                          // รายการสินค้า 
+                          final item = _mockItems[index];
+                          return Card(
+                            margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), 
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)), 
+                            elevation: 4, 
+                            child: ListTile( // เอา ListTile มาใส่เป็น child ของ Card
+                              title: Text(item['product']!, style: const TextStyle(fontWeight: FontWeight.bold)),
+                              subtitle: Text('สถานที่รับ : ${item['pickup']}\nสถานที่ส่ง : ${item['dropoff']}'),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
+                  ],
                 ),
               );
             },
@@ -168,26 +217,28 @@ class _WaitRiderRecieveState extends State<WaitRiderRecieve> {
 
           // หน้าต่างแจ้งเตือน
           Align(
-            alignment: Alignment.topCenter,
-            child: SafeArea(
-              child: AnimatedOpacity(
-                opacity: _showStatusOverlay ? 1.0 : 0.0, 
-                duration: const Duration(milliseconds: 500),
-                child: Container(
-                  margin: const EdgeInsets.only(top: 10.0),
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                  decoration: BoxDecoration(
-                    color: Colors.black.withOpacity(0.7),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: const Text(
-                    'ไรเดอร์รับงานแล้ว',
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
+          alignment: Alignment.topCenter,
+          child: SafeArea(
+            child: AnimatedOpacity(
+              opacity: _showStatusOverlay ? 1.0 : 0.0,
+              duration: const Duration(milliseconds: 500),
+              child: Container(
+                margin: const EdgeInsets.only(top: 10.0),
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                decoration: BoxDecoration(
+                  color: Colors.indigo[600],
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 5)],
+                ),
+                child: Text(
+                  _currentStatusText, // <-- ใช้ข้อความจาก State ที่เราสร้าง
+                  style: TextStyle(color: Colors.yellow, fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
           ),
+        ),
+          //-------------------------- 
         ],
       ),
     );

@@ -318,6 +318,29 @@ class _RegisterUserState extends State<RegisterUser> {
 
   }
 
+  //เวอร์ชันอัพเกรด ลองๆ
+  /*Future<bool> ishave(String user_number) async {
+  try {
+    // สั่งให้ Firestore ค้นหา User ที่มี 'phone_number' ตรงกัน
+  final query = await FirebaseFirestore.instance
+      .collection("Users")
+      .where("phone_number", isEqualTo: user_number)
+      .limit(1) // หาเจอแค่ 1 คนก็พอแล้ว!
+      .get();
+
+  // ถ้าผลลัพธ์ที่ได้กลับมาไม่ว่างเปล่า ก็แปลว่า 'มี' ซ้ำ!
+  if (query.docs.isNotEmpty) {
+    developer.log('พบเบอร์โทรศัพท์ซ้ำ: $user_number');
+    return true;
+  }
+  } catch (e) {
+    developer.log('Error querying data: $e');
+  } 
+
+  return false;
+}*/
+
+ // หลักๆที่อาร์มทํา
  Future<bool> ishave(String user_number) async {
   try {
     // 1. Get a reference to the collection
@@ -346,8 +369,6 @@ class _RegisterUserState extends State<RegisterUser> {
   } catch (e) {
     developer.log('Error querying data: $e');
   }
-
-
 
   return false;
  }
