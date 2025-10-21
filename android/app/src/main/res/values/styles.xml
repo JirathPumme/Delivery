@@ -12,7 +12,6 @@
               android:value="AIzaSyDflIVGaU1JI72BC5YcQMWIZA7g5Exvsdc"
               /> -->
     <string name="app_name">Delivery</string>
-    <string name="maps_api_key">AIzaSyDflIVGaU1JI72BC5YcQMWIZA7g5Exvsdc</string>
 
     <!-- Theme applied to the Android Window as soon as the process has started.
          This theme determines the color of the Android Window while your

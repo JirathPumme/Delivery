@@ -120,9 +120,9 @@ class _WaitRiderRecieveState extends State<WaitRiderRecieve> {
 
 
                 child: ListView.builder(
-                  controller: scrollController, // <-- ส่ง Controller ให้ ListView!
-                  padding: EdgeInsets.fromLTRB(0,30,0,0), //ไม่ต้องเว้นบรรทัด
-                  itemCount: _mockItems.length + 1, // +1 สำหรับปุ่มยกเลิก
+                  controller: scrollController, // ส่ง Controller ให้ ListView!
+                  padding: EdgeInsets.fromLTRB(0,30,0,0),
+                  itemCount: _mockItems.length + 1, 
                   itemBuilder: (BuildContext context, int index) {
                     
 
@@ -166,7 +166,7 @@ class _WaitRiderRecieveState extends State<WaitRiderRecieve> {
           ),
 
 
-          // เพิ่มหน้าต่างแจ้งเตือน
+          // หน้าต่างแจ้งเตือน
           Align(
             alignment: Alignment.topCenter,
             child: SafeArea(
