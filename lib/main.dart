@@ -31,10 +31,6 @@ await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
@@ -43,7 +39,7 @@ class MyApp extends StatelessWidget {
   ),
   title: 'Delivery',
   // home: const MyApp(),
-  initialRoute: '/user_main_screen',
+  initialRoute: '/login',
   routes: {
     '/splash': (context) => const Splash_Page(),
     '/login': (context) => const LoginPage(),

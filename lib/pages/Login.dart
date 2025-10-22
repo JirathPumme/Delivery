@@ -58,13 +58,16 @@ Future<void> queryDataFromCollection(String collectionName) async {
   }
 }
 
-  void _login() {
+  Future<void> _login() async{
 
     String phone = _phoneController.text;
     String password = _passwordController.text;
     bool userlogin = false;
     bool riderlogin = false;
-    queryDataFromCollection('Users');
+
+    await queryDataFromCollection('Users');
+
+    if (!mounted) return;
 
     for (var user in userdata) {
       if (user.id != null) {
@@ -75,10 +78,9 @@ Future<void> queryDataFromCollection(String collectionName) async {
         }else {
           riderlogin = true;
         }
+        break;
       }
-
       }
-
 
     }
     // return;
