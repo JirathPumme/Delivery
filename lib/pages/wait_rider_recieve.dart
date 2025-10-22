@@ -116,11 +116,11 @@ class _WaitRiderRecieveState extends State<WaitRiderRecieve> {
               target: _initialCameraPosition, // เริ่มกล้องที่กรุงเทพ
               zoom: 15.0,
             ),
-            // 4. เมื่อแผนที่พร้อมใช้งาน...
+            //เมื่อแผนที่พร้อมใช้งาน...
             onMapCreated: (GoogleMapController controller) {
-              _mapController = controller; // 4.1 เก็บ 'รีโมท' ไว้
+              _mapController = controller; //เก็บ 'รีโมท' ไว้
 
-              // 4.2 สั่งให้กล้องเคลื่อนที่ไปที่เป้าหมายทันที!
+              // สั่งให้กล้องเคลื่อนที่ไปที่เป้าหมายทันที!
               _mapController?.animateCamera(
                 CameraUpdate.newCameraPosition(
                   const CameraPosition(target: _pickupLocation, zoom: 16.0),
@@ -180,10 +180,8 @@ class _WaitRiderRecieveState extends State<WaitRiderRecieve> {
                         itemCount: _mockItems.length + 1, 
                         itemBuilder: (BuildContext context, int index) {
                           
-                      
-                          //... ภายใน itemBuilder
                           if (index == _mockItems.length) {
-                            // --- เอา if-else นี้ไปใส่แทนปุ่ม 'ยกเลิก' เดิม! ---
+                         
 
                             // ถ้าเป็น 'Sender' ให้แสดงปุ่ม 'ยกเลิก'
                             if (widget.role == TrackingUserRole.sender) {
@@ -191,7 +189,7 @@ class _WaitRiderRecieveState extends State<WaitRiderRecieve> {
                                 padding: const EdgeInsets.all(16.0),
                                 child: TextButton(
                                   style: TextButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white),
-                                  onPressed: () { /* ... กลับไปหน้า ReadyDelivery ... */ },
+                                  onPressed: () { /*กลับไปหน้า ReadyDelivery */ },
                                   child: const Text('ยกเลิก'),
                                 ),
                               );
@@ -204,10 +202,10 @@ class _WaitRiderRecieveState extends State<WaitRiderRecieve> {
                                   style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 78, 230, 84)),
                                   onPressed: () {
                                     // TODO: อัปเดตสถานะใน Firebase เป็น [4]
-                                    // ไปยังหน้า complete_sender.dart
+                                    
                                     Navigator.pushReplacement(
                                       context,
-                                      MaterialPageRoute(builder: (context) => const CompleteSenderPage()), // สร้างหน้านี้ด้วยนะ!
+                                      MaterialPageRoute(builder: (context) => const CompleteSenderPage()),
                                     );
                                   },
                                   child: const Text('ยืนยันการรับสินค้า',
@@ -216,13 +214,11 @@ class _WaitRiderRecieveState extends State<WaitRiderRecieve> {
                                 ),
                               );
                             }
-                            // ถ้าไม่ใช่ทั้งสอง ก็ไม่ต้องแสดงอะไรเลย
+                           
                             return const SizedBox.shrink();
 
-                            // ----------------------------------------------------
                           }
 
-                          // ... ส่วนแสดงรายการสินค้า (เหมือนเดิม) ...
                                                 
                           // รายการสินค้า 
                           final item = _mockItems[index];
@@ -230,7 +226,7 @@ class _WaitRiderRecieveState extends State<WaitRiderRecieve> {
                             margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), 
                             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)), 
                             elevation: 4, 
-                            child: ListTile( // เอา ListTile มาใส่เป็น child ของ Card
+                            child: ListTile(
                               title: Text(item['product']!, style: const TextStyle(fontWeight: FontWeight.bold)),
                               subtitle: Text('สถานที่รับ : ${item['pickup']}\nสถานที่ส่ง : ${item['dropoff']}'),
                             ),
@@ -261,14 +257,14 @@ class _WaitRiderRecieveState extends State<WaitRiderRecieve> {
                   boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.2), blurRadius: 5)],
                 ),
                 child: Text(
-                  _currentStatusText, // <-- ใช้ข้อความจาก State ที่เราสร้าง
+                  _currentStatusText,
                   style: TextStyle(color: Colors.yellow, fontSize: 16, fontWeight: FontWeight.bold),
                 ),
               ),
             ),
           ),
         ),
-          //-------------------------- 
+          
         ],
       ),
     );
