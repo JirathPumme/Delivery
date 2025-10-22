@@ -1,5 +1,4 @@
 //เตรียมOrder ของฝั่ง User Sender
-// ยังไม่เรียบร้อย มีบัค Map อยู๋
 import 'package:delivery/pages/confirm_order.dart';
 import 'package:delivery/pages/profile_user.dart';
 import 'package:delivery/pages/wait_rider_recieve.dart';

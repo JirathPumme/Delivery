@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:delivery/pages/home_user.dart';
+import 'package:delivery/pages/profile_user.dart';
 import 'package:flutter/material.dart';
 import 'package:delivery/components/bottompurple.dart';
 import 'package:delivery/components/backbutton.dart';
@@ -13,7 +15,6 @@ class ProfileUserFix extends StatefulWidget {
 
 class _ProfileUserFixState extends State<ProfileUserFix> {
   File? _profileImage;
-  File? _vehicleImage;
   final ImagePicker _picker = ImagePicker();
 
   Future<void> _pickProfileImage() async {
@@ -25,26 +26,18 @@ class _ProfileUserFixState extends State<ProfileUserFix> {
     }
   }
 
-  Future<void> _pickVehicleImage() async {
-    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
-    if (pickedFile != null) {
-      setState(() {
-        _vehicleImage = File(pickedFile.path);
-      });
-    }
-  }
   
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _licensePlateController = TextEditingController();
+  final TextEditingController _placeController = TextEditingController();
 
   @override
   void dispose() {
     _nameController.dispose();
     _phoneController.dispose();
     _passwordController.dispose();
-    _licensePlateController.dispose();
+    _placeController.dispose();
     super.dispose();
   }
 
@@ -88,24 +81,11 @@ class _ProfileUserFixState extends State<ProfileUserFix> {
                 const SizedBox(height: 16),
                 _buildTextField(label: 'รหัสผ่าน', controller: _passwordController, obscureText: true),
                 const SizedBox(height: 16),
-                _buildTextField(label: 'ทะเบียนรถ', controller: _licensePlateController),
+                _buildTextField(label: 'ที่อยู๋', controller: _placeController),
                 const SizedBox(height: 24),
 
-                _buildSectionLabel('รูปยานพาหนะ'),
-                OutlinedButton(
-                  style: OutlinedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    minimumSize: const Size(double.infinity, 50),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                  ),
-                  onPressed: _pickVehicleImage,
-                  child: const Text('เลือกรูป', style: TextStyle(color: Colors.black54, fontSize: 16)),
-                ),
-                const SizedBox(height: 40),
-
                 ElevatedButton(
-                  onPressed: () {
-                  },
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.green[500],
                     minimumSize: const Size(double.infinity, 50),

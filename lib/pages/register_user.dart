@@ -276,7 +276,7 @@ Widget _buildGpsTextField() {
           // --- 3. ติดตั้ง 'ไกปืน' (IconButton) ---
           suffixIcon: IconButton(
             icon: const Icon(Icons.my_location, color: Color(0xFF5B4FBF)),
-            onPressed: _getCurrentLocation, // <-- พอกดแล้วให้เรียกฟังก์ชันนี้!
+            onPressed: _getCurrentLocation,
           ),
         ),
       ),
