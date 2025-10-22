@@ -78,11 +78,15 @@ void _showConfirmationDialog() {
             child: const Text('ตกลง', style: TextStyle(color: Colors.green)),
             onPressed: () {
               print("Confirmed! Firing data to Firebase...");
-              Navigator.pushReplacement
-                    (
-                      context,
-                      MaterialPageRoute(builder: (context) => const WaitRiderRecieve()),
-                    );
+              Navigator.pushReplacement(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => WaitRiderRecieve(
+                    deliveryId: '',
+                    role: TrackingUserRole.sender, // <-- ระบุว่าเป็น Sender
+                  ),
+                ),
+              );
               // ใส่ Firebase 
               //Navigator.of(dialogContext).pop(); // ปิด Pop-up
               //Navigator.of(context).pop();      // กลับไปหน้า Home

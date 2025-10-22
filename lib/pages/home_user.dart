@@ -1,19 +1,26 @@
 import 'package:delivery/pages/ready_delivery.dart';
+import 'package:delivery/pages/wait_rider_recieve.dart';
 import 'package:flutter/material.dart';
 
 
 class HomeUser extends StatelessWidget {
-  const HomeUser({super.key});
+  final bool hasIncomingPackage;
+
+
+  const HomeUser({
+    super.key,
+    required this.hasIncomingPackage,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.yellowAccent[700],
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            const SizedBox(height: 45),
+    return Container(
+      width: double.infinity,
+      color: Colors.yellowAccent[700],
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          const SizedBox(height: 45),
 
             ElevatedButton(
               onPressed: ()
@@ -46,30 +53,51 @@ class HomeUser extends StatelessWidget {
 
             const Text(''),
 
-            ElevatedButton(
-              onPressed: () {},
-
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey[200],
-                foregroundColor: Colors.black,
-                minimumSize: const Size(280, 90),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
+            Stack(
+            clipBehavior: Clip.none,
+            children: [
+              ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => WaitRiderRecieve(
+                        deliveryId: "ID_ของที่กำลังมาส่ง", // <-- นายต้องหา ID ของของที่มาส่งให้เจอ
+                        role: TrackingUserRole.receiver, // <-- ระบุว่าเป็น Receiver
+                      ),
+                    ),
+                  );
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.grey[200],
+                  foregroundColor: Colors.black,
+                  minimumSize: const Size(280, 90),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  elevation: 5,
                 ),
-                elevation: 5,
+                child: const Text('รับสินค้า', style: TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
               ),
-
-              child: const Text(
-                'รับสินค้า',
-                style: TextStyle(
-                  fontSize: 30,
-                  fontWeight: FontWeight.bold,
+              
+              // ไอคอนแจ้งเตือน (จะแสดงก็ต่อเมื่อ hasIncomingPackage เป็น true) ---
+              if (hasIncomingPackage)
+                Positioned(
+                  top: 10,
+                  right: 20,
+                  child: Container(
+                    padding: const EdgeInsets.all(2),
+                    decoration: const BoxDecoration(
+                      color: Colors.red,
+                      shape: BoxShape.circle,
+                    ),
+                    child: const Icon(Icons.priority_high, color: Colors.white, size: 24),
+                  ),
                 ),
-              ),
+              ],
             ),
           ],
         ),
-      ),
-    );
+      );
   }
 }

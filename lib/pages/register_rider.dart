@@ -50,7 +50,9 @@ class _RegisterRiderState extends State<RegisterRider> {
               children: [
                 const SizedBox(height: 0),
 
-                CircleAvatar(
+              GestureDetector(
+                onTap: _pickProfileImage,
+                child : CircleAvatar(
                   radius: 50,
                   backgroundColor: Colors.white,
                   backgroundImage: _profileImage != null ? FileImage(_profileImage!) : null,
@@ -58,12 +60,10 @@ class _RegisterRiderState extends State<RegisterRider> {
                       ? const Icon(Icons.person, size: 50, color: Colors.grey)
                       : null,
                 ),
-                /*TextButton(
-                  onPressed: _pickProfileImage,
-                  child: const Text(''),
-                ),*/
-                const Text(''),
-
+              ),
+              
+              const Text(''),
+        
                 const Text(
                   'Rider',
                   style: TextStyle(

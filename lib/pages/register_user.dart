@@ -1,5 +1,5 @@
 // import 'dart:nativewrappers/_internal/vm/lib/math_patch.dart';
-
+import 'dart:io';
 import 'package:delivery/components/Navigator_back.dart';
 import 'package:delivery/pages/Login.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +7,7 @@ import 'package:delivery/components/bottompurple.dart';
 import 'package:geolocator/geolocator.dart';
 import 'dart:developer' as developer;
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:image_picker/image_picker.dart';
 
 class RegisterUser extends StatefulWidget {
   const RegisterUser({super.key});
@@ -16,11 +17,22 @@ class RegisterUser extends StatefulWidget {
 }
 
 class _RegisterUserState extends State<RegisterUser> {
+  File? _profileImage;
+  final ImagePicker _picker = ImagePicker();
   final TextEditingController _gpsController = TextEditingController();
   var username = TextEditingController();
   var password = TextEditingController();
   var phone_num = TextEditingController();
   var address = TextEditingController();
+
+   Future<void> _pickProfileImage() async {
+    final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedFile != null) {
+      setState(() {
+        _profileImage = File(pickedFile.path);
+      });
+    }
+  }
 
   Future<void> addTestData() async {
     await FirebaseFirestore.instance.collection('test').add({
@@ -85,12 +97,21 @@ class _RegisterUserState extends State<RegisterUser> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const CircleAvatar(
+
+                GestureDetector(
+                onTap: _pickProfileImage,
+                child : CircleAvatar(
                   radius: 50,
-                  // backgroundImage: NetworkImage(''),
-                  backgroundColor: Colors.deepOrangeAccent,
+                  backgroundColor: Colors.white,
+                  backgroundImage: _profileImage != null ? FileImage(_profileImage!) : null,
+                  child: _profileImage == null
+                      ? const Icon(Icons.person, size: 50, color: Colors.grey)
+                      : null,
                 ),
-                const SizedBox(height: 16),
+              ),
+
+              const Text(''),
+
                 const Text(
                   'User',
                   style: TextStyle(
@@ -227,39 +248,41 @@ class _RegisterUserState extends State<RegisterUser> {
     );
   }
 
-  Widget _buildGpsTextField() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        const Text(
-          'พิกัด GPS',
-          style: TextStyle(color: Colors.white, fontSize: 16),
-        ),
-        const SizedBox(height: 8),
-        TextFormField(
-          controller: _gpsController,
-          readOnly: true,
-          decoration: InputDecoration(
-            filled: true,
-            fillColor: Colors.white,
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.circular(12),
-              borderSide: BorderSide.none,
-            ),
-            contentPadding: const EdgeInsets.symmetric(
-              vertical: 12,
-              horizontal: 16,
-            ),
-            // เพิ่มไอคอนท้ายช่อง
-            suffixIcon: IconButton(
-              icon: const Icon(Icons.my_location, color: Color(0xFF5B4FBF)),
-              onPressed: _getCurrentLocation,
-            ),
+  // --- เอาฟังก์ชันนี้ไปแทนที่ของเก่า! ---
+Widget _buildGpsTextField() {
+  return Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      const Text(
+        'พิกัด GPS',
+        style: TextStyle(color: Colors.white, fontSize: 16),
+      ),
+      const SizedBox(height: 8),
+      TextFormField(
+        controller: _gpsController, // 1. ผูก Controller ไว้แสดงผล
+        readOnly: true, // 2. ทำให้ผู้ใช้พิมพ์เองไม่ได้!
+        decoration: InputDecoration(
+          filled: true,
+          fillColor: Colors.white,
+          hintText: 'กดปุ่มเพื่อดึงตำแหน่ง',
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(12),
+            borderSide: BorderSide.none,
+          ),
+          contentPadding: const EdgeInsets.symmetric(
+            vertical: 12,
+            horizontal: 16,
+          ),
+          // --- 3. ติดตั้ง 'ไกปืน' (IconButton) ---
+          suffixIcon: IconButton(
+            icon: const Icon(Icons.my_location, color: Color(0xFF5B4FBF)),
+            onPressed: _getCurrentLocation, // <-- พอกดแล้วให้เรียกฟังก์ชันนี้!
           ),
         ),
-      ],
-    );
-  }
+      ),
+    ],
+  );
+}
 
   Future<void> register() async {
     var username_t = username.text.trim();

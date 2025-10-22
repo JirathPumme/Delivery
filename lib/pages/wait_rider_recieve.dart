@@ -1,12 +1,21 @@
 import 'package:delivery/components/custom_app_bar.dart';
+import 'package:delivery/pages/complete_sender_page.dart';
 import 'package:delivery/pages/ready_delivery.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 //import 'package:cloud_firestore/clousd_firestore.dart';
 import 'dart:async';
+enum TrackingUserRole { sender, receiver }
 
 class WaitRiderRecieve extends StatefulWidget {
-  const WaitRiderRecieve({super.key});
+  final String deliveryId;
+  final TrackingUserRole role;
+
+  const WaitRiderRecieve({
+    super.key,
+    required this.deliveryId,
+    required this.role,
+  });
 
   //static const LatLng _initialPosition = LatLng(13.7563, 100.5018);
 
@@ -172,28 +181,49 @@ class _WaitRiderRecieveState extends State<WaitRiderRecieve> {
                         itemBuilder: (BuildContext context, int index) {
                           
                       
+                          //... ภายใน itemBuilder
                           if (index == _mockItems.length) {
-                            return Padding(
-                              padding: const EdgeInsets.all(16.0),
-                              child: TextButton(
-                                style: TextButton.styleFrom(
-                                  backgroundColor: Colors.red,
-                                  foregroundColor: Colors.white,
+                            // --- เอา if-else นี้ไปใส่แทนปุ่ม 'ยกเลิก' เดิม! ---
+
+                            // ถ้าเป็น 'Sender' ให้แสดงปุ่ม 'ยกเลิก'
+                            if (widget.role == TrackingUserRole.sender) {
+                              return Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: TextButton(
+                                  style: TextButton.styleFrom(backgroundColor: Colors.red, foregroundColor: Colors.white),
+                                  onPressed: () { /* ... กลับไปหน้า ReadyDelivery ... */ },
+                                  child: const Text('ยกเลิก'),
                                 ),
-                                onPressed: () {
-                                  Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(builder: (context) => const ReadyDelivery()),
-                                  );
-                                },
-                                child: Text('ยกเลิก',style: TextStyle(
-                                  fontWeight:FontWeight.bold
+                              );
+                            }
+                            // ถ้าเป็น 'Receiver' ให้แสดงปุ่ม 'ยืนยันการรับสินค้า'
+                            else if (widget.role == TrackingUserRole.receiver) {
+                              return Padding(
+                                padding: const EdgeInsets.all(16.0),
+                                child: ElevatedButton(
+                                  style: ElevatedButton.styleFrom(backgroundColor: const Color.fromARGB(255, 78, 230, 84)),
+                                  onPressed: () {
+                                    // TODO: อัปเดตสถานะใน Firebase เป็น [4]
+                                    // ไปยังหน้า complete_sender.dart
+                                    Navigator.pushReplacement(
+                                      context,
+                                      MaterialPageRoute(builder: (context) => const CompleteSenderPage()), // สร้างหน้านี้ด้วยนะ!
+                                    );
+                                  },
+                                  child: const Text('ยืนยันการรับสินค้า',
+                                  style: TextStyle(color: Colors.black,
+                                  fontWeight: FontWeight.bold),),
                                 ),
-                               ),
-                              ),
-                            );
+                              );
+                            }
+                            // ถ้าไม่ใช่ทั้งสอง ก็ไม่ต้องแสดงอะไรเลย
+                            return const SizedBox.shrink();
+
+                            // ----------------------------------------------------
                           }
-                      
+
+                          // ... ส่วนแสดงรายการสินค้า (เหมือนเดิม) ...
+                                                
                           // รายการสินค้า 
                           final item = _mockItems[index];
                           return Card(
