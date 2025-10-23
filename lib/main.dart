@@ -35,7 +35,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
   theme: ThemeData(
-    textTheme: GoogleFonts.notoSansThaiTextTheme()
+    textTheme: GoogleFonts.notoSansThaiTextTheme() 
   ),
   title: 'Delivery',
   // home: const MyApp(),
