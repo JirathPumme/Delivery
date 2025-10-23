@@ -1,7 +1,9 @@
+import 'package:delivery/Session/User_session.dart';
 import 'package:delivery/pages/ready_delivery.dart';
 import 'package:delivery/pages/wait_rider_recieve.dart';
 import 'package:flutter/material.dart';
-
+import 'package:flutter_session_manager/flutter_session_manager.dart';
+import 'dart:developer' as developer;
 
 class HomeUser extends StatelessWidget {
   final bool hasIncomingPackage;
@@ -25,6 +27,7 @@ class HomeUser extends StatelessWidget {
             ElevatedButton(
               onPressed: ()
               {
+                getuserdata();
                 Navigator.push
                     (
                       context,
@@ -100,4 +103,10 @@ class HomeUser extends StatelessWidget {
         ),
       );
   }
+
+  getuserdata() async {
+    UserSession user_data = UserSession.fromJson(await SessionManager().get("User"));
+    developer.log("Now User Session: "+user_data.user_table.toString());
+  }
+
 }

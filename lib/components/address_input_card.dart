@@ -28,8 +28,8 @@ class AddressInputCard extends StatelessWidget {
           _buildAddressRow(
             icon: Icons.circle,
             iconColor: Colors.blue,
-            controller: dropoffController,
-            hintText: '',
+            controller: pickupController,
+            hintText: 'เลือกจุดที่จะรับ',
             onMapTap: onPickupMapTap,
           ),
           const Divider(),
