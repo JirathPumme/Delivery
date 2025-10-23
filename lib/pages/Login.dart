@@ -1,10 +1,12 @@
 //import 'dart:developer';
+import 'package:delivery/Session/User_session.dart';
 import 'package:delivery/config/Apptheme.dart';
 import 'package:delivery/pages/register_user.dart';
 import 'package:delivery/pages/rider_main_screen.dart';
 import 'package:delivery/pages/select_user.rider.dart';
 import 'package:delivery/pages/user_main_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:delivery/components/bottompurple.dart';
 import 'package:delivery/pages/home_user.dart';
@@ -64,6 +66,7 @@ Future<void> queryDataFromCollection(String collectionName) async {
     String password = _passwordController.text;
     bool userlogin = false;
     bool riderlogin = false;
+    UserSession user_session;
 
     await queryDataFromCollection('Users');
 
@@ -73,6 +76,8 @@ Future<void> queryDataFromCollection(String collectionName) async {
       if (user.id != null) {
       developer.log(user.id.toString());     
       if (user.phoneNumber == phone && user.password == password) {
+          user_session = UserSession(user_table: user.id, role_id: user.roleId);
+          await SessionManager().set("User", user_session);
         if (user.roleId == 1) {
           userlogin = true;
         }else {
@@ -86,6 +91,8 @@ Future<void> queryDataFromCollection(String collectionName) async {
     // return;
 
     if (userlogin) {
+
+
       setState(() {
         _errorText = null;
       });

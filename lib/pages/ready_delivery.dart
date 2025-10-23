@@ -1,4 +1,6 @@
 //เตรียมOrder ของฝั่ง User Sender
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:delivery/Session/User_session.dart';
 import 'package:delivery/pages/confirm_order.dart';
 import 'package:delivery/pages/profile_user.dart';
 import 'package:delivery/pages/wait_rider_recieve.dart';
@@ -6,10 +8,12 @@ import 'package:flutter/material.dart';
 import 'package:delivery/components/custom_app_bar.dart';
 //import 'package:delivery/components/backbutton.dart';
 import 'package:delivery/components/address_input_card.dart';
+import 'package:flutter_session_manager/flutter_session_manager.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:delivery/pages/map_picker_screen.dart';
 import 'package:delivery/components/quantity_selector.dart';
 import 'package:delivery/components/item_detail_card.dart';
+import 'dart:developer' as developer;
 
 class ReadyDelivery extends StatefulWidget {
   const ReadyDelivery({super.key});
@@ -20,10 +24,17 @@ class ReadyDelivery extends StatefulWidget {
 
 class _ReadyDeliveryState extends State<ReadyDelivery> {
   int _quantity = 0;
+  List<ItemDetailCard> _itemDetails = [];
 
-  final TextEditingController _pickupController = TextEditingController(text: 'บ้านเลขที่ XX ซอย yy');
+
+  final TextEditingController _pickupController = TextEditingController();
   final TextEditingController _dropoffController = TextEditingController();
   final TextEditingController _receiverPhoneController = TextEditingController();
+  var itemdropOffdetail = TextEditingController();
+  String pickUp_lat = "";
+  String pickUp_lng = "";
+  String dropOff_lat = "";
+  String dropOff_lng = "";
 
   @override
   void dispose() {
@@ -51,7 +62,6 @@ class _ReadyDeliveryState extends State<ReadyDelivery> {
 
 void _showConfirmationDialog() {
 
-
   showDialog(
     context: context,
     builder: (BuildContext dialogContext) {
@@ -75,8 +85,11 @@ void _showConfirmationDialog() {
           ),
           TextButton(
             child: const Text('ตกลง', style: TextStyle(color: Colors.green)),
-            onPressed: () {
-              print("Confirmed! Firing data to Firebase...");
+            onPressed: () async {
+              if (await field_req()) {
+              developer.log("Confirmed! Firing data to Firebase...");
+              // UserSession user_data = UserSession.fromJson(await SessionManager().get("User"));
+              // add_to_order(user_data.user_table.toString(), _receiverPhoneController.text, itemdropOffdetail.text);
               Navigator.pushReplacement(
                 context,
                 MaterialPageRoute(
@@ -89,6 +102,12 @@ void _showConfirmationDialog() {
               // ใส่ Firebase 
               //Navigator.of(dialogContext).pop(); // ปิด Pop-up
               //Navigator.of(context).pop();      // กลับไปหน้า Home
+
+              } else {
+                return;
+              }
+
+
             },
           ),
         ],
@@ -98,25 +117,36 @@ void _showConfirmationDialog() {
   );
 }
 
-  
-  Future<void> _pickLocationFromMap(bool isDropoff) async {
-    final LatLng? selectedPosition = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => const MapPickerScreen()),
-    );
+  Future<void> _pickLocationFromMap(int drop_or_pick) async { // Removed bool isDropoff
 
-    if (selectedPosition != null) {
-      final newAddress = 'Lat: ${selectedPosition.latitude.toStringAsFixed(4)}, Lng: ${selectedPosition.longitude.toStringAsFixed(4)}';
-      
-      setState(() {
-        if (isDropoff) {
-          _dropoffController.text = newAddress;
-        } else {
-          _pickupController.text = newAddress;
-        }
-      });
-    }
+  // 1. Simplified navigation (since both paths were identical)
+  final LatLng? selectedPosition = await Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const MapPickerScreen()),
+  );
+
+  if (selectedPosition != null) {
+    final newAddress = 'Lat: ${selectedPosition.latitude.toStringAsFixed(4)}, Lng: ${selectedPosition.longitude.toStringAsFixed(4)}';
+    developer.log(newAddress);
+    
+    setState(() {
+      // 2. Logic to correctly set the controller based on the number
+      if (drop_or_pick == 2) {
+        // Set Dropoff address
+        _dropoffController.text = newAddress;
+        dropOff_lat = selectedPosition.latitude.toStringAsFixed(4);
+        dropOff_lng = selectedPosition.longitude.toStringAsFixed(4);
+      } else if (drop_or_pick == 1) {
+        // Set Pickup address
+        _pickupController.text = newAddress;
+        pickUp_lat = selectedPosition.latitude.toStringAsFixed(4);
+        pickUp_lng = selectedPosition.longitude.toStringAsFixed(4);
+        // developer.log("pickup here: "+_pickupController.text);
+      }
+      // Note: Added explicit 'else if (drop_or_pick == 1)' for clarity
+    });
   }
+}
   
 
   @override
@@ -149,8 +179,8 @@ void _showConfirmationDialog() {
             AddressInputCard(
               pickupController: _pickupController,
               dropoffController: _dropoffController,
-              onPickupMapTap: () => _pickLocationFromMap(false),
-              onDropoffMapTap: () => _pickLocationFromMap(true),
+              onPickupMapTap: () => _pickLocationFromMap(1),
+              onDropoffMapTap: () => _pickLocationFromMap(2),
             ),
 
             const SizedBox(height: 20),
@@ -190,7 +220,8 @@ void _showConfirmationDialog() {
                         onPressed: () {
                           //firebase put
                           final phoneNumber = _receiverPhoneController.text;
-                          print('กำลังค้นหาผู้รับด้วยเบอร์: $phoneNumber');
+                          developer.log('กำลังค้นหาผู้รับด้วยเบอร์: $phoneNumber');
+                          getuserdata();
                           // หลังจากค้นหาเจอ ก็เอาที่อยู่ไปใส่ใน _dropoffController.text
                         },
                         style: ElevatedButton.styleFrom(
@@ -209,12 +240,12 @@ void _showConfirmationDialog() {
             ),
             const SizedBox(height: 30),
 
-            QuantitySelector(
-              quantity: _quantity,
-              onIncrement: _incrementQuantity,
-              onDecrement: _decrementQuantity,
-            ),
-            const SizedBox(height: 20),
+            // QuantitySelector(
+            //   quantity: _quantity,
+            //   onIncrement: _incrementQuantity,
+            //   onDecrement: _decrementQuantity,
+            // ),
+            // const SizedBox(height: 20),
 
             const Padding(
               padding: EdgeInsets.symmetric(horizontal: 16.0),
@@ -223,23 +254,47 @@ void _showConfirmationDialog() {
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
               ),
             ),
+
             
-            ListView.builder(
-              itemCount: _quantity,
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                return ItemDetailCard(
-                  itemNumber: index + 1,
-                );
-              },
+            // ListView.builder(
+            //   itemCount: _quantity,
+            //   shrinkWrap: true,
+            //   physics: const NeverScrollableScrollPhysics(),
+            //   itemBuilder: (context, index) {
+            //     return ItemDetailCard(
+            //       itemNumber: index + 1,
+            //     );
+            //   },
+            // ),
+            // const SizedBox(height: 10),
+            Padding(
+              padding: const EdgeInsets.all(15.0),
+              child: TextFormField(
+                            controller: itemdropOffdetail,
+                            keyboardType: TextInputType.phone,
+                            decoration: InputDecoration(
+                              hintText: 'กรอกข้อมูลสินค้า',
+                              filled: true,
+                              fillColor: Colors.grey[200],
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(20),
+                                borderSide: BorderSide.none,
+                              ),
+                              contentPadding: const EdgeInsets.symmetric(horizontal: 16.0),
+                            ),
+                          ),
             ),
+                      
             const SizedBox(height: 10),
 
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: ElevatedButton(
-                onPressed:  _showConfirmationDialog,
+                onPressed:  () {
+                  _showConfirmationDialog();
+                  // get_data_to_delivery();
+                  
+                },
                 /*()
                 {
                   Navigator.push(
@@ -277,4 +332,57 @@ void _showConfirmationDialog() {
       ),
     );
   }
+
+
+  getuserdata() async {
+    UserSession user_data = UserSession.fromJson(await SessionManager().get("User"));
+    developer.log("Now User Session: "+user_data.user_table.toString());
+  }
+
+  get_data_to_delivery() async {
+    UserSession user_data = UserSession.fromJson(await SessionManager().get("User"));
+    developer.log("Now User Session: "+user_data.user_table.toString());
+    developer.log("PickUp Item: "+_pickupController.text);
+    developer.log(pickUp_lat);
+    developer.log(pickUp_lng);
+    developer.log("DropOff Item: "+_dropoffController.text);
+    developer.log(dropOff_lat);
+    developer.log(dropOff_lng);
+    developer.log("sender phone Number: "+_receiverPhoneController.text);
+    developer.log("Text drop off detail: "+ itemdropOffdetail.text);
+  }
+
+  Future<void> add_to_order(String user_id, String receiver_number, String detail) async {
+    try {
+      await FirebaseFirestore.instance.collection("Orders").add({
+        "sender_id": user_id,
+        "receiver_phone": receiver_number,
+        "detail": detail,
+        "pickUp_lat": pickUp_lat,
+        "pickUp_lng": pickUp_lng ,
+        "dropOff_lat": dropOff_lat,
+        "dropOff_lng": dropOff_lng
+      });
+    }catch (err) {
+      developer.log(err.toString());
+    }
+  }
+
+  Future<bool> field_req() async {
+    if (_receiverPhoneController.text != "" && itemdropOffdetail.text != "" && pickUp_lat != "" && dropOff_lat != "") {
+      UserSession user_data = UserSession.fromJson(await SessionManager().get("User"));
+      add_to_order(user_data.user_table.toString(), _receiverPhoneController.text, itemdropOffdetail.text);
+      return true;
+    }else {
+      developer.log("field can not be null");
+      ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+      content: Text('ข้อมูลไม่ครบถ้วน!'),
+      backgroundColor: Color.fromARGB(255, 255, 0, 0),
+      ),
+      );
+      return false;
+    }
+  }
+  
 }
