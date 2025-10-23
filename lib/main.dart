@@ -37,9 +37,9 @@ class MyApp extends StatelessWidget {
   theme: ThemeData(
     textTheme: GoogleFonts.notoSansThaiTextTheme() 
   ),
-  title: 'Delivery',
+  title: '',
   // home: const MyApp(),
-  initialRoute: '/login',
+  initialRoute: '/rider_main_screen',
   routes: {
     '/splash': (context) => const Splash_Page(),
     '/login': (context) => const LoginPage(),
@@ -54,6 +54,7 @@ class MyApp extends StatelessWidget {
     '/profile_rider': (context) => const ProfileRider(),
     '/profile_user': (context) => const ProfileUser(),
     '/testgps': (context) => const Testgps(),
+    '/google_map': (context) => const GoogleMapScreen(),
     '/google_map': (context) => const GoogleMapScreen(),
     },
   );

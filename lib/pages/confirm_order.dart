@@ -1,3 +1,4 @@
+import 'package:delivery/pages/profile_user.dart';
 import 'package:flutter/material.dart';
 import 'package:delivery/components/custom_app_bar.dart';
 
@@ -12,7 +13,9 @@ class _ConfirmOrderState extends State<ConfirmOrder> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: CustomAppBar(),
+      appBar: AppBar(
+        title: Text('หน้าที่ไม่มีอยู่จริง'),
+      ),
     );
   }
 }

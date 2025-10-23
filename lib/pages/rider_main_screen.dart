@@ -4,6 +4,7 @@ import 'package:delivery/components/custombottombavbar.dart';
 import 'package:delivery/pages/home_rider.dart';
 import 'package:delivery/pages/list_rider_page.dart';
 import 'package:delivery/pages/setting_page.dart';
+import 'package:delivery/pages/Setting_page_rider.dart';
 
 class RiderMainScreen extends StatefulWidget {
   const RiderMainScreen({super.key});
@@ -18,7 +19,7 @@ class _RiderMainScreenState extends State<RiderMainScreen> {
   static const List<Widget> _pages = <Widget>[
     HomeRider(),   // Index 0
     ListRiderPage(),   // Index 1
-    SettingPage(),     // Index 2
+    SettingPageRider(),     // Index 2
   ];
 
   void _onItemTapped(int index) {

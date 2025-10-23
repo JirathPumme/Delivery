@@ -114,53 +114,6 @@ class _ProfileUserState extends State<ProfileUser> {
                 ),
                 // Text("String TEst"),
 
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: GestureDetector(
-                    onTap: () {
-                      developer.log("Pop cat tap!!");
-                      setState(() {
-                        isFirst = !isFirst;
-                        imageUrl = isFirst
-                            ? 'https://popcat.click/twitter-card.jpg'
-                            : 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMsc1uhSiSwVsDcno2LCTMP1i2sBjPI1ScB513v63e9yfZ7FxLe3xOPoXnPb5qa5WbSN0&usqp=CAU';
-                      });
-                    },
-                    onTapUp: (_) {
-                      setState(() {
-                        imageUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTMsc1uhSiSwVsDcno2LCTMP1i2sBjPI1ScB513v63e9yfZ7FxLe3xOPoXnPb5qa5WbSN0&usqp=CAU';
-                      });
-                    },
-                    onTapDown: (_) {
-                      imageUrl = 'https://popcat.click/twitter-card.jpg';
-                    },
-                    child: Image.network(
-                      imageUrl,
-                      width: 250,
-                      height: 250,
-                    ),
-                  ),
-                ),
-                ElevatedButton(
-                      onPressed: () {
-                        logout();
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.red[500],
-                        foregroundColor: Colors.white,
-                        minimumSize: const Size(double.infinity, 50),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                      ),
-                      child: const Text(
-                        'ออกจากระบบ',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
               ],
             ),
           ),

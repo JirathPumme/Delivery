@@ -203,9 +203,13 @@ class _WaitRiderRecieveState extends State<WaitRiderRecieve> {
                                   onPressed: () {
                                     // TODO: อัปเดตสถานะใน Firebase เป็น [4]
                                     
+                                    if (!mounted) return;
+
                                     Navigator.pushReplacement(
                                       context,
-                                      MaterialPageRoute(builder: (context) => const CompleteSenderPage()),
+                                      MaterialPageRoute(builder: (context) => const CompleteSenderPage(
+                                      showConfirmationPopup: true
+                                      )),
                                     );
                                   },
                                   child: const Text('ยืนยันการรับสินค้า',

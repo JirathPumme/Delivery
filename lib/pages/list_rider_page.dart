@@ -11,7 +11,7 @@ class _ListRiderPageState extends State<ListRiderPage > {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-       appBar: AppBar(title:  Text('List รายการ')),
+       appBar: AppBar(title:  Text('List รายการไรเดอร์')),
       body: const Center(
         child: Text(''),
       ),
