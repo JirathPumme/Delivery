@@ -7,6 +7,7 @@ import 'package:delivery/pages/profile_user.dart';
 import 'package:delivery/pages/register_rider.dart';
 import 'package:delivery/pages/register_user.dart';
 import 'package:delivery/pages/rider_main_screen.dart';
+import 'package:delivery/pages/rider_map.dart';
 import 'package:delivery/pages/select_user.rider.dart';
 import 'package:delivery/pages/testgps.dart';
 import 'package:delivery/pages/user_main_screen.dart';
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
   ),
   title: '',
   // home: const MyApp(),
-  initialRoute: '/login',
+  initialRoute: '/user_main_screen',
   routes: {
     '/splash': (context) => const Splash_Page(),
     '/login': (context) => const LoginPage(),

@@ -1,3 +1,5 @@
+import 'package:delivery/components/Navigator_back.dart';
+import 'package:delivery/components/custom_app_bar_rider.dart';
 import 'package:delivery/pages/home_rider.dart';
 import 'package:flutter/material.dart';
 import 'package:delivery/components/custombottombavbar.dart';
@@ -33,6 +35,7 @@ class _RiderMainScreenState extends State<RiderMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: CustomAppBarRider(),
       body: _pages.elementAt(_selectedIndex),
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: _selectedIndex,

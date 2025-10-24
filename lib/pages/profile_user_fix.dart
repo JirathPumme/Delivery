@@ -81,7 +81,7 @@ class _ProfileUserFixState extends State<ProfileUserFix> {
                 const SizedBox(height: 16),
                 _buildTextField(label: 'รหัสผ่าน', controller: _passwordController, obscureText: true),
                 const SizedBox(height: 16),
-                _buildTextField(label: 'ที่อยู๋', controller: _placeController),
+                _buildTextField(label: 'ที่อยู่', controller: _placeController),
                 const SizedBox(height: 24),
 
                 ElevatedButton(

@@ -36,7 +36,7 @@ class HomeUser extends StatelessWidget {
               },
 
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey[200],
+                backgroundColor: Colors.grey[300],
                 foregroundColor: Colors.black,
                 minimumSize: const Size(280, 90),
                 shape: RoundedRectangleBorder(
@@ -65,14 +65,14 @@ class HomeUser extends StatelessWidget {
                     context,
                     MaterialPageRoute(
                       builder: (context) => WaitRiderRecieve(
-                        deliveryId: "ID_ของที่กำลังมาส่ง", // <-- นายต้องหา ID ของของที่มาส่งให้เจอ
+                        deliveryId: "ID_ของที่กำลังมาส่ง", // <-- ID ของของที่มาส่งให้เจอ
                         role: TrackingUserRole.receiver, // <-- ระบุว่าเป็น Receiver
                       ),
                     ),
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey[200],
+                  backgroundColor: Colors.grey[300],
                   foregroundColor: Colors.black,
                   minimumSize: const Size(280, 90),
                   shape: RoundedRectangleBorder(

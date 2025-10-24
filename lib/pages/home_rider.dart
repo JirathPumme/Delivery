@@ -291,7 +291,6 @@ class _HomeRiderState extends State<HomeRider> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const CustomAppBarRider(),
       backgroundColor: Colors.yellowAccent[700],
       body: Column(
         children: [
