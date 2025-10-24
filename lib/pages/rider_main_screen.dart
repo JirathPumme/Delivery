@@ -5,6 +5,7 @@ import 'package:delivery/pages/home_rider.dart';
 import 'package:delivery/pages/list_rider_page.dart';
 import 'package:delivery/pages/setting_page.dart';
 import 'package:delivery/pages/Setting_page_rider.dart';
+import 'dart:developer' as developer;
 
 class RiderMainScreen extends StatefulWidget {
   const RiderMainScreen({super.key});
@@ -26,6 +27,7 @@ class _RiderMainScreenState extends State<RiderMainScreen> {
     setState(() {
       _selectedIndex = index;
     });
+    developer.log("hii");
   }
 
   @override
@@ -34,8 +36,9 @@ class _RiderMainScreenState extends State<RiderMainScreen> {
       body: _pages.elementAt(_selectedIndex),
       bottomNavigationBar: CustomBottomNavBar(
         currentIndex: _selectedIndex,
-        onTap: _onItemTapped,
+        onTap: _onItemTapped, 
       ),
+      // Text("Hello"),
     );
   }
 }

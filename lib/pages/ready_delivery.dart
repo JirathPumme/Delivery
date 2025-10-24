@@ -361,7 +361,8 @@ void _showConfirmationDialog() {
         "pickUp_lat": pickUp_lat,
         "pickUp_lng": pickUp_lng ,
         "dropOff_lat": dropOff_lat,
-        "dropOff_lng": dropOff_lng
+        "dropOff_lng": dropOff_lng,
+        "status": 0
       });
     }catch (err) {
       developer.log(err.toString());
