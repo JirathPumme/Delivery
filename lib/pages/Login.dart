@@ -72,7 +72,7 @@ class LoginPageState extends State<LoginPage> {
       UserDataList user = UserDataList.fromJson(data, docId: doc.id);
 
       userdata.add(user);
-      developer.log('✅ (id: ${user.id})');
+      developer.log('✅ (id: ${user.id}) address ${user.address}' );
       // developer.log(data["phone_number"]);
       // developer.log(data["password"]);
     }

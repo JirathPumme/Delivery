@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
   ),
   title: '',
   // home: const MyApp(),
-  initialRoute: '/user_main_screen',
+  initialRoute: '/login',
   routes: {
     '/splash': (context) => const Splash_Page(),
     '/login': (context) => const LoginPage(),

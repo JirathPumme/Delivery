@@ -1,6 +1,7 @@
 //เตรียมOrder ของฝั่ง User Sender
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:delivery/Session/User_session.dart';
+import 'package:delivery/model/user_data_list.dart';
 import 'package:delivery/pages/confirm_order.dart';
 import 'package:delivery/pages/profile_user.dart';
 import 'package:delivery/pages/wait_rider_recieve.dart';
@@ -25,6 +26,10 @@ class ReadyDelivery extends StatefulWidget {
 class _ReadyDeliveryState extends State<ReadyDelivery> {
   int _quantity = 0;
   List<ItemDetailCard> _itemDetails = [];
+  List<UserDataList> userdata = [];
+  List<UserDataList> dataPhone_found = [];
+  String phone_receiver = "";
+  
 
 
   final TextEditingController _pickupController = TextEditingController();
@@ -104,7 +109,7 @@ void _showConfirmationDialog() {
               //Navigator.of(context).pop();      // กลับไปหน้า Home
 
               } else {
-                return;
+                return Navigator.pop(context);
               }
 
 
@@ -217,11 +222,14 @@ void _showConfirmationDialog() {
                       const SizedBox(width: 10),
 
                       ElevatedButton(
-                        onPressed: () {
+                        onPressed: () async {
                           //firebase put
                           final phoneNumber = _receiverPhoneController.text;
                           developer.log('กำลังค้นหาผู้รับด้วยเบอร์: $phoneNumber');
-                          getuserdata();
+                          // getuserdata();
+                            userPhone_found(phoneNumber);
+                          // queryDataFromCollection("Users", await getuserdata());
+
                           // หลังจากค้นหาเจอ ก็เอาที่อยู่ไปใส่ใน _dropoffController.text
                         },
                         style: ElevatedButton.styleFrom(
@@ -334,9 +342,10 @@ void _showConfirmationDialog() {
   }
 
 
-  getuserdata() async {
+  Future<String> getuserdata() async {
     UserSession user_data = UserSession.fromJson(await SessionManager().get("User"));
     developer.log("Now User Session: "+user_data.user_table.toString());
+    return user_data.user_table.toString();
   }
 
   get_data_to_delivery() async {
@@ -370,9 +379,19 @@ void _showConfirmationDialog() {
   }
 
   Future<bool> field_req() async {
-    if (_receiverPhoneController.text != "" && itemdropOffdetail.text != "" && pickUp_lat != "" && dropOff_lat != "") {
+    if (phone_receiver == "" || phone_receiver == Null) {
+      developer.log("field can not be null");
+      ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+      content: Text('เบอร์มือถือผู้รับยังไม่ถูกตรวจสอบ หรือเบอร์มือถือนี้ไม่มีอยู่จริง!'),
+      backgroundColor: Color.fromARGB(255, 255, 0, 0),
+      ),
+      );
+      return false;
+
+    }else if (_receiverPhoneController.text != "" && itemdropOffdetail.text != "" && pickUp_lat != "" && dropOff_lat != "") {
       UserSession user_data = UserSession.fromJson(await SessionManager().get("User"));
-      add_to_order(user_data.user_table.toString(), _receiverPhoneController.text, itemdropOffdetail.text);
+      add_to_order(user_data.user_table.toString(), phone_receiver, itemdropOffdetail.text);
       return true;
     }else {
       developer.log("field can not be null");
@@ -383,6 +402,109 @@ void _showConfirmationDialog() {
       ),
       );
       return false;
+    }
+  }
+  
+  Future<void> userPhone_found(String phoneTofound) async {
+  dataPhone_found = [];
+  userdata = [];
+  developer.log("Phone to found: $phoneTofound");
+
+  await queryDataFromCollection("Users", await getuserdata());
+  var now_user_id = await getuserdata();
+
+  for (var user in userdata) {
+    if (user.id != now_user_id && user.phoneNumber == phoneTofound) {
+      dataPhone_found.add(user);
+    }
+  }
+
+  developer.log("Found users: ${dataPhone_found.length}");
+  developer.log("--------------------------------------");
+
+  // ✅ Show result dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: const Text(
+          "รายชื่อจากหมายเลขโทรศัพท์ที่ค้นหา",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        content: dataPhone_found.isEmpty
+            ? const Text("ไม่พบข้อมูลผู้ใช้ที่ตรงกับเบอร์นี้")
+            : SizedBox(
+                width: double.maxFinite,
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: dataPhone_found.length,
+                  itemBuilder: (context, index) {
+                    final user = dataPhone_found[index];
+                    return ListTile(
+                      leading: const Icon(Icons.person, color: Colors.blue),
+                      title: Text(
+                        user.username,
+                        style: const TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle: Text(
+                        "เบอร์โทร: ${user.phoneNumber}\nที่อยู่: ${user.address}",
+                      ),
+                      trailing: ElevatedButton(
+                        onPressed: () {
+                          phone_receiver = user.phoneNumber; // ✅ set the value
+                          developer.log("Selected phone: $phone_receiver");
+                          Navigator.pop(context); // close dialog
+                        },
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: Colors.green,
+                          padding: const EdgeInsets.symmetric(horizontal: 16),
+                        ),
+                        child: const Text("เลือก"),
+                      ),
+                    );
+                  },
+                ),
+              ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: const Text(
+              "ปิด",
+              style: TextStyle(color: Colors.red),
+            ),
+          ),
+        ],
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+      );
+    },
+  );
+}
+
+    Future<void> queryDataFromCollection(String collectionName, String nowUserId) async {
+    try {
+      CollectionReference collectionRef = FirebaseFirestore.instance.collection(
+        collectionName,
+      );
+
+      QuerySnapshot querySnapshot = await collectionRef.get();
+
+      for (var doc in querySnapshot.docs) {
+        Map<String, dynamic> data = doc.data() as Map<String, dynamic>;
+        // developer.log(data["phone_number"]);
+        // developer.log(data["username"]);
+
+        // Pass doc.id into fromJson
+        UserDataList user = UserDataList.fromJson(data, docId: doc.id);
+
+        userdata.add(user);
+        // developer.log('✅ (id: ${user.id})');
+      }
+
+      // developer.log('Total users fetched: ${userdata.length}');
+    } catch (e) {
+      developer.log('Error querying data: $e');
     }
   }
   
