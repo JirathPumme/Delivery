@@ -8,6 +8,8 @@ import 'package:geolocator/geolocator.dart';
 import 'dart:developer' as developer;
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:delivery/pages/map_picker_screen.dart';
 
 class RegisterUser extends StatefulWidget {
   const RegisterUser({super.key});
@@ -33,6 +35,22 @@ class _RegisterUserState extends State<RegisterUser> {
       });
     }
   }
+
+  Future<void> _pickGpsFromMap() async {
+  final LatLng? selectedPosition = await Navigator.push(
+    context,
+    MaterialPageRoute(builder: (context) => const MapPickerScreen()),
+  );
+
+  if (selectedPosition != null) {
+    setState(() {
+      
+      _gpsController.text =
+          '${selectedPosition.latitude.toStringAsFixed(6)}, ${selectedPosition.longitude.toStringAsFixed(6)}';
+      developer.log('Selected GPS: ${_gpsController.text}');
+    });
+  }
+}
 
   Future<void> addTestData() async {
     await FirebaseFirestore.instance.collection('test').add({
@@ -264,7 +282,7 @@ Widget _buildGpsTextField() {
         decoration: InputDecoration(
           filled: true,
           fillColor: Colors.white,
-          hintText: 'กดปุ่มเพื่อดึงตำแหน่ง',
+          hintText: 'เลือกตำแหน่งากแผนที่',
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide.none,
@@ -276,7 +294,7 @@ Widget _buildGpsTextField() {
           // --- 3. ติดตั้ง 'ไกปืน' (IconButton) ---
           suffixIcon: IconButton(
             icon: const Icon(Icons.my_location, color: Color(0xFF5B4FBF)),
-            onPressed: _getCurrentLocation,
+            onPressed: _pickGpsFromMap,
           ),
         ),
       ),
