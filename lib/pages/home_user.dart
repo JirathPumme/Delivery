@@ -36,7 +36,7 @@ class HomeUser extends StatelessWidget {
               },
 
               style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.grey[300],
+                backgroundColor: Colors.grey[200],
                 foregroundColor: Colors.black,
                 minimumSize: const Size(280, 90),
                 shape: RoundedRectangleBorder(
@@ -72,7 +72,7 @@ class HomeUser extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.grey[300],
+                  backgroundColor: Colors.grey[200],
                   foregroundColor: Colors.black,
                   minimumSize: const Size(280, 90),
                   shape: RoundedRectangleBorder(
@@ -84,7 +84,7 @@ class HomeUser extends StatelessWidget {
               ),
               
               // ไอคอนแจ้งเตือน (จะแสดงก็ต่อเมื่อ hasIncomingPackage เป็น true) ---
-              if (hasIncomingPackage)
+              /*if (hasIncomingPackage)
                 Positioned(
                   top: 10,
                   right: 20,
@@ -96,7 +96,7 @@ class HomeUser extends StatelessWidget {
                     ),
                     child: const Icon(Icons.priority_high, color: Colors.white, size: 24),
                   ),
-                ),
+                ),*/
               ],
             ),
           ],

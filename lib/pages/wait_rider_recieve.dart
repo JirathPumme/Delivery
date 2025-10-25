@@ -37,7 +37,7 @@ class _WaitRiderRecieveState extends State<WaitRiderRecieve> {
 
 
   final List<Map<String, String>> _mockItems = [
-    {
+    /*{
       "product": "มังงะโคนัน เล่ม 1",
       "pickup": "บ้านเลขที่ XX ซอย yy",
       "dropoff": "สถานที่ส่ง ZZ",
@@ -47,18 +47,18 @@ class _WaitRiderRecieveState extends State<WaitRiderRecieve> {
        "product": "ฟิกเกอร์อาสึกะ",
        "pickup": "บ้านเลขที่ XX ซอย yy",
        "dropoff": "สถานที่ส่ง ZZ",
-     },
+     },*/
   ];
 
 
-  @override
+  /*@override
   void initState() {
     super.initState();
 
     _runStatusSimulation();
-  }
+  }*/
 
-  void _runStatusSimulation() {
+  /*void _runStatusSimulation() {
         //(จำลอง) ไรเดอร์กดรับงาน
         Timer(const Duration(seconds: 2), () {
           setState(() {
@@ -96,7 +96,7 @@ class _WaitRiderRecieveState extends State<WaitRiderRecieve> {
         }); 
       });
     });
-  }
+  }*/
 
   @override
   Widget build(BuildContext context) {

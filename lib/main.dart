@@ -40,7 +40,7 @@ class MyApp extends StatelessWidget {
   ),
   title: '',
   // home: const MyApp(),
-  initialRoute: '/login',
+  initialRoute: '/rider_main_screen',
   routes: {
     '/splash': (context) => const Splash_Page(),
     '/login': (context) => const LoginPage(),
@@ -56,7 +56,7 @@ class MyApp extends StatelessWidget {
     '/profile_user': (context) => const ProfileUser(),
     '/testgps': (context) => const Testgps(),
     '/google_map': (context) => const GoogleMapScreen(),
-    '/google_map': (context) => const GoogleMapScreen(),
+    //'/ridermap': (context) => const RiderMapPage(),
     },
   );
  } 

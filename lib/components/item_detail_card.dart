@@ -15,6 +15,7 @@ class ItemDetailCard extends StatefulWidget {
 class _ItemDetailCardState extends State<ItemDetailCard> {
   File? _image;
   final ImagePicker _picker = ImagePicker();
+  final TextEditingController _descriptionController = TextEditingController();
 
   Future<void> _pickImage() async {
     final XFile? pickedFile = await _picker.pickImage(source: ImageSource.gallery);
@@ -54,6 +55,7 @@ class _ItemDetailCardState extends State<ItemDetailCard> {
           const SizedBox(height: 8),
           //ช่องกรอกรายละเอียด
           TextFormField(
+            controller: _descriptionController,
             decoration: const InputDecoration(
               hintText: 'กรอกรายละเอียดสินค้าที่นี่',
               filled: true,

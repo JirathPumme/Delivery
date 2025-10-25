@@ -12,8 +12,8 @@ class MapPickerScreen extends StatefulWidget {
 
 class _MapPickerScreenState extends State<MapPickerScreen> {
   static const _initialCameraPosition = CameraPosition(
-    target: LatLng(13.7563, 100.5018),
-    zoom: 12,
+    target: LatLng(16.246417 , 103.251826),
+    zoom: 20,
   );
 
   GoogleMapController? _mapController;

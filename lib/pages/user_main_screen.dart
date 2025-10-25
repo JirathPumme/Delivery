@@ -19,7 +19,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
   
   bool _hasIncomingPackage = true;
 
-  @override
+  /*@override
   void initState() {
     super.initState();
     // สร้าง 'สถานการณ์จำลอง' ---
@@ -42,7 +42,7 @@ class _UserMainScreenState extends State<UserMainScreen> {
         );
       }
     });
-  }
+  }*/
 
   late final List<Widget> _pages = <Widget>[
     HomeUser(hasIncomingPackage: _hasIncomingPackage),
