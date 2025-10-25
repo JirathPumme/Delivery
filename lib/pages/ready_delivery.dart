@@ -447,11 +447,12 @@ void _showConfirmationDialog() {
                         style: const TextStyle(fontWeight: FontWeight.bold),
                       ),
                       subtitle: Text(
-                        "เบอร์โทร: ${user.phoneNumber}\nที่อยู่: ${user.address}",
+                        "เบอร์โทร: ${user.phoneNumber}\nที่อยู่: ${user.address}\ngps: ${user.gps}",
                       ),
                       trailing: ElevatedButton(
                         onPressed: () {
                           phone_receiver = user.phoneNumber; // ✅ set the value
+                          
                           developer.log("Selected phone: $phone_receiver");
                           Navigator.pop(context); // close dialog
                         },

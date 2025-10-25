@@ -22,6 +22,7 @@ class UserDataList {
   String phoneNumber;
   String password;
   String? address;
+  String? gps;
 
   UserDataList({
     this.id, // optional
@@ -30,6 +31,7 @@ class UserDataList {
     required this.phoneNumber,
     required this.password,
     this.address,
+    this.gps,
   });
 
   // ✅ Use named optional parameter for docId
@@ -41,6 +43,7 @@ class UserDataList {
       phoneNumber: json["phone_number"],
       password: json["password"],
       address: json["address"] ?? "",
+      gps: json["gps"] ?? ""
     );
   }
 
@@ -51,5 +54,6 @@ class UserDataList {
         "phone_number": phoneNumber,
         "password": password,
         "address": address,
+        "gps": gps
       };
 }

@@ -64,6 +64,7 @@ class _RegisterUserState extends State<RegisterUser> {
     String password,
     String phone,
     String address,
+    String gps
   ) async {
     try {
       await FirebaseFirestore.instance.collection('Users').add({
@@ -71,6 +72,7 @@ class _RegisterUserState extends State<RegisterUser> {
         'password': password,
         'phone_number': phone,
         'address': address,
+        'gps': gps,
         'role_id': 1,
       });
     } catch (err) {
@@ -282,7 +284,7 @@ Widget _buildGpsTextField() {
         decoration: InputDecoration(
           filled: true,
           fillColor: Colors.white,
-          hintText: 'เลือกตำแหน่งากแผนที่',
+          hintText: 'เลือกตำแหน่งจากแผนที่',
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
             borderSide: BorderSide.none,
@@ -307,11 +309,14 @@ Widget _buildGpsTextField() {
     var password_t = password.text.trim();
     var phone_t = phone_num.text.trim();
     var address_t = address.text.trim();
+    var gps_t = _gpsController.text;
 
     if (username_t.isEmpty ||
         password_t.isEmpty ||
         phone_t.isEmpty ||
-        address_t.isEmpty) {
+        address_t.isEmpty ||
+        gps_t.isEmpty
+        ) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
           content: Text('กรุณากรอกข้อมูลให้ครบทุกช่อง'),
@@ -343,7 +348,7 @@ Widget _buildGpsTextField() {
       ),
     );
     }else {
-    addUser(username_t, password_t, phone_t, address_t);  
+    addUser(username_t, password_t, phone_t, address_t, gps_t);  
     // Show success SnackBar
     ScaffoldMessenger.of(context).showSnackBar(
       const SnackBar(
